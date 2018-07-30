@@ -17,10 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/foo', function () {
-    return view('welcome');
-});
+Route::get('/foo', 'FooController@hello');
 
-Route::get('/cinemov', function () {
-    return view('welcome');
-});
+Route::get('/cinemov', 'CinemovController@index');
