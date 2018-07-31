@@ -32,4 +32,11 @@ class ExampleTest extends TestCase
 		
 		$response->assertStatus(200);
 	}
+	
+	public function testCinemov()
+	{
+		$response = $this->get('/cinemov');
+		
+		$response->assertStatus(200);
+	}
 }
