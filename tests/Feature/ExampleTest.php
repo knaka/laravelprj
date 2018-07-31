@@ -46,4 +46,10 @@ class ExampleTest extends TestCase
 		
 		$response->assertStatus(200);
 	}
+	
+	public function testNotFound()
+	{
+		$response = $this->get('/not_found');
+		$response->assertStatus(404);
+	}
 }
