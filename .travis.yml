@@ -1,7 +1,16 @@
 language: php
-before_script:
-  - composer install
 php:
   - '7.1'
+services:
+  - postgresql
+before_script:
+  - composer install
+  - createdb laravelprjtest
+  - psql -c "create role laravelprjtest with login password 'laravelprjtest'" laravelprjtest
+  - psql -U laravelprjtest -c "GRANT ALL ON ALL TABLES IN SCHEMA public TO laravelprjtest"
+  - psql -U laravelprjtest -c "GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO laravelprjtest"
+  - psql -U laravelprjtest -c "GRANT ALL ON ALL FUNCTIONS IN SCHEMA public TO laravelprjtest"
+  - ./artisan migrate:reset --env testing
+  - ./artisan migrate --env testing
 after_success:
   - vendor/bin/php-coveralls --verbose

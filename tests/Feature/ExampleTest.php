@@ -39,4 +39,11 @@ class ExampleTest extends TestCase
 		
 		$response->assertStatus(200);
 	}
+	
+	public function testFoo()
+	{
+		$response = $this->get('/foo');
+		
+		$response->assertStatus(200);
+	}
 }
