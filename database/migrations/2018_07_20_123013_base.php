@@ -23,12 +23,12 @@ class Base extends Migration
 			 * Fluent には property として登録されてもいないので補完も効かない
 			 * @see \Illuminate\Database\Schema\Grammars\PostgresGrammar::modifyNullable() 
 			 */
-			$age = $table->unsignedInteger('age');
+			// $age = $table->unsignedInteger('age');
 			// いずれも可
 			// $age->nullable(); // これは chain も可
 			// $age->__call('nullable', [true]); // 実態はこれで、当然 chain も可
 			// $age->offsetSet('nullable', true);
-			$age['nullable'] = true;
+			// $age['nullable'] = true;
 			// $age->__call('nullable', []);
 			// $table->unsignedInteger('age')['nullable'] = true; // 変だがこれも可
 			// 結局こんなのが冗長ながらも明示的なので一番好みかな…
