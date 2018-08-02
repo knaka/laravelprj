@@ -13,7 +13,6 @@ env:
     - dbpass=laravelprjtest
 before_script:
   - composer install
-  - createdb laravelprjtest
   - psql -U $dbadmin -c "CREATE ROLE $dbuser WITH LOGIN PASSWORD '$dbpass'" $defaultdb
   - psql -U $dbadmin -c "CREATE DATABASE $dbname OWNER $dbuser" $defaultdb
   - ./artisan migrate:reset
