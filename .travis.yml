@@ -6,16 +6,14 @@ services:
 env:
   global:
     - APP_ENV=testing
-    - dbspace=laravelprjtest
+    - dbname=laravelprjtest
     - dbuser=laravelprjtest
     - dbpass=laravelprjtest
 before_script:
   - composer install
   - createdb laravelprjtest
-  - psql -c "CREATE ROLE $dbuser WITH LOGIN PASSWORD '$dbpass'" $dbspace
-  - psql -c "GRANT ALL ON ALL TABLES IN SCHEMA public TO $dbuser" $dbspace
-  - psql -c "GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO $dbuser" $dbspace
-  - psql -c "GRANT ALL ON ALL FUNCTIONS IN SCHEMA public TO $dbuser" $dbspace
+  - psql -U postgres -c "CREATE ROLE $dbuser WITH LOGIN PASSWORD '$dbpass'" postgres
+  - psql -U postgres -c "CREATE DATABASE $dbname OWNER $dbuser" postgres
   - ./artisan migrate:reset
   - ./artisan migrate
 after_success:
