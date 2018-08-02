@@ -6,14 +6,16 @@ services:
 env:
   global:
     - APP_ENV=testing
+    - dbadmin=postgres
+    - defaultdb=postgres
     - dbname=laravelprjtest
     - dbuser=laravelprjtest
     - dbpass=laravelprjtest
 before_script:
   - composer install
   - createdb laravelprjtest
-  - psql -U postgres -c "CREATE ROLE $dbuser WITH LOGIN PASSWORD '$dbpass'" postgres
-  - psql -U postgres -c "CREATE DATABASE $dbname OWNER $dbuser" postgres
+  - psql -U $dbadmin -c "CREATE ROLE $dbuser WITH LOGIN PASSWORD '$dbpass'" $defaultdb
+  - psql -U $dbadmin -c "CREATE DATABASE $dbname OWNER $dbuser" $defaultdb
   - ./artisan migrate:reset
   - ./artisan migrate
 after_success:
