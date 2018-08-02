@@ -3,14 +3,20 @@ php:
   - '7.1'
 services:
   - postgresql
+env:
+  global:
+    - APP_ENV=testing
+    - dbspace=laravelprjtest
+    - dbuser=laravelprjtest
+    - dbpass=laravelprjtest
 before_script:
   - composer install
   - createdb laravelprjtest
-  - psql -c "create role laravelprjtest with login password 'laravelprjtest'" laravelprjtest
-  - psql -U laravelprjtest -c "GRANT ALL ON ALL TABLES IN SCHEMA public TO laravelprjtest"
-  - psql -U laravelprjtest -c "GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO laravelprjtest"
-  - psql -U laravelprjtest -c "GRANT ALL ON ALL FUNCTIONS IN SCHEMA public TO laravelprjtest"
-  - ./artisan migrate:reset --env testing
-  - ./artisan migrate --env testing
+  - psql -c "CREATE ROLE $dbuser WITH LOGIN PASSWORD '$dbpass'" $dbspace
+  - psql -c "GRANT ALL ON ALL TABLES IN SCHEMA public TO $dbuser" $dbspace
+  - psql -c "GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO $dbuser" $dbspace
+  - psql -c "GRANT ALL ON ALL FUNCTIONS IN SCHEMA public TO $dbuser" $dbspace
+  - ./artisan migrate:reset
+  - ./artisan migrate
 after_success:
   - vendor/bin/php-coveralls --verbose
