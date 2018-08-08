@@ -19,3 +19,4 @@ before_script:
   - ./artisan migrate
 after_success:
   - vendor/bin/php-coveralls --verbose
+  - cat /home/travis/build/knaka/laravelprj/build/logs/coveralls-upload.json
